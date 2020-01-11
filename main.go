@@ -14,6 +14,11 @@ var (
 	Token string
 )
 
+type DogResp struct {
+	Success string
+	Message string
+}
+
 func init() {
 
 	flag.StringVar(&Token, "t", "", "Bot Token")
@@ -66,5 +71,9 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	// If the message is "pong" reply with "Ping!"
 	if m.Content == "pong" {
 		s.ChannelMessageSend(m.ChannelID, "Ping!")
+	}
+
+	if m.Content == "dog" {
+		s.ChannelMessageSend(m.ChannelID, getDog())
 	}
 }
