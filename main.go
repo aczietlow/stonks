@@ -76,4 +76,8 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if m.Content == "dog" {
 		s.ChannelMessageSend(m.ChannelID, getDog())
 	}
+
+	if m.Content == "cat" {
+		s.ChannelMessageSend(m.ChannelID, getCat())
+	}
 }
