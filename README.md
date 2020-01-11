@@ -44,3 +44,14 @@ Navigate to:
 ```
 https://discordapp.com/oauth2/authorize?client_id=%Client_ID%&scope=bot&permissions=0
 ```
+
+### Bot commands
+
+Currently getting everything set up still.
+
+```
+- ping
+- pong
+- cat
+- dog
+```
