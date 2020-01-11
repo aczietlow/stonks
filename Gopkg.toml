@@ -32,3 +32,8 @@
 [prune]
   go-tests = true
   unused-packages = true
+
+[metadata.heroku]
+  root-package = "github.com/aczietlow/stonks"
+  go-version = "1.13.6"
+  install = [ "./..." ]
