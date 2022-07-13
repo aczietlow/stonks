@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"regexp"
 	"syscall"
 )
 
@@ -83,5 +84,12 @@ func routing(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 	if m.Content == "cat" {
 		s.ChannelMessageSend(m.ChannelID, getCat())
+	}
+
+	stockMatcher, _ := regexp.Compile("\\$([A-Z]|[a-z]){1,4}")
+	if stockMatcher.MatchString(m.Content) {
+		stockFinder, _ := regexp.Compile("([A-Z]|[a-z]){1,4}")
+		stock := stockFinder.FindString(m.Content)
+		s.ChannelMessageSend(m.ChannelID, "Found a stock. Looking up stock "+stock)
 	}
 }
