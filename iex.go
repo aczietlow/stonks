@@ -53,11 +53,3 @@ func quote(token string, ticker string) string {
 	}
 	return fmt.Sprintf("%.2f", data[0].LastSalePrice)
 }
-
-func start() {
-	iexApi := api{
-		baseurl: "https://sandbox.iexapis.com",
-		version: "stable",
-	}
-	fmt.Println(iexApi)
-}
