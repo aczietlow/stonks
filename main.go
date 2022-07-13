@@ -11,9 +11,10 @@ import (
 	"syscall"
 )
 
-// Variables used for command line parameters
+// Variables used for command line parameters.
+
 var (
-	Token string
+	Token, IexToken string
 )
 
 type DogResp struct {
@@ -46,6 +47,8 @@ func main() {
 		fmt.Println("error opening connection,", err)
 		return
 	}
+
+	IexToken = os.Getenv("IEX_TOKEN")
 
 	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
@@ -90,6 +93,10 @@ func routing(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if stockMatcher.MatchString(m.Content) {
 		stockFinder, _ := regexp.Compile("([A-Z]|[a-z]){1,4}")
 		stock := stockFinder.FindString(m.Content)
-		s.ChannelMessageSend(m.ChannelID, "Found a stock. Looking up stock "+stock)
+		s.ChannelMessageSend(m.ChannelID, "Attempting to look up stock "+stock)
+
+		quote := quote(IexToken, stock)
+		fmt.Println(quote)
+		s.ChannelMessageSend(m.ChannelID, "$"+quote)
 	}
 }
