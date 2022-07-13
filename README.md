@@ -7,7 +7,7 @@
 From within the project root, run the following to install all of the go gettable dependencies.
 
 ```sh
-go get -d ./
+go install ./
 ```
 
 ### Build
