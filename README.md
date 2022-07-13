@@ -12,6 +12,8 @@ go install ./
 
 ### Build
 
+Create an `.env` file by copying `.env.default` and provide values for configuration variables.
+
 From within the project root, run the below command to compile the source code into an executable.
 
 ```sh
