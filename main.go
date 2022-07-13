@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/bwmarrin/discordgo"
+	"github.com/joho/godotenv"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
@@ -19,6 +21,12 @@ type DogResp struct {
 }
 
 func main() {
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	Token = os.Getenv("DISCORD_TOKEN")
 
 	// Create a new Discord session using the provided bot token.
@@ -49,7 +57,7 @@ func main() {
 }
 
 // This function will be called (due to AddHandler above) every time a new
-// message is created on any channel that the autenticated bot has access to.
+// message is created on any channel that the authenticated bot has access to.
 func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	// Ignore all messages created by the bot itself
@@ -57,20 +65,22 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if m.Author.ID == s.State.User.ID {
 		return
 	}
+	routing(s, m)
+}
+
+// Need much better scaling and maintainability of request routing
+func routing(s *discordgo.Session, m *discordgo.MessageCreate) {
 	// If the message is "ping" reply with "Pong!"
 	if m.Content == "ping" {
 		s.ChannelMessageSend(m.ChannelID, "I'm backkkkkkk!")
 	}
-
 	// If the message is "pong" reply with "Ping!"
 	if m.Content == "pong" {
 		s.ChannelMessageSend(m.ChannelID, "Ping!")
 	}
-
 	if m.Content == "dog" {
 		s.ChannelMessageSend(m.ChannelID, getDog())
 	}
-
 	if m.Content == "cat" {
 		s.ChannelMessageSend(m.ChannelID, getCat())
 	}
